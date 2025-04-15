@@ -18,6 +18,7 @@ export class StepFormComponent  implements OnInit {
   @Input() step!: DecisionTreeStep;
   @Input() model: any = {};
   @Output() submitStep = new EventEmitter<any>();
+  @Input() readonly = false;
 
   form = new FormGroup({});
   fields: FormlyFieldConfig[] = [];

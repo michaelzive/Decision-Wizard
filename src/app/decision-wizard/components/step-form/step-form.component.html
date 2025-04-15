@@ -3,7 +3,7 @@
     </formly-form>
 
     <div class="form-actions">
-        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid || form.pending">
             {{ step.isOutcome ? "Finish" : "Next" }}
         </button>
     </div>

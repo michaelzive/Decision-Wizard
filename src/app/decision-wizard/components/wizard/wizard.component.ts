@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { StepFormComponent } from "../step-form/step-form.component";
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { WizardRouteSummaryComponent } from '../wizard-route-summary/wizard-route-summary.component';
 
 @Component({
   selector: 'app-wizard',
@@ -14,7 +15,8 @@ import { Subscription } from 'rxjs';
     CommonModule,
     MatExpansionModule,
     MatButtonModule,
-    StepFormComponent
+    StepFormComponent,
+    WizardRouteSummaryComponent
   ],
   templateUrl: './wizard.component.html',
   styleUrl: './wizard.component.scss'

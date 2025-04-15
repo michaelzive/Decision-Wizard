@@ -1,27 +1,36 @@
-<mat-accordion multi>
-    @for(step of visitedSteps; let i = $index; track step.id) {
-        <ng-container>
-            <mat-expansion-panel [expanded]="i === visitedSteps.length - 1">
+<div class="wizard-container">
+    <!-- Left: Accordion Form -->
+    <div class="wizard-form">
+      <mat-accordion multi>
+        <ng-container *ngFor="let step of visitedSteps; let i = index">
+          <mat-expansion-panel [expanded]="i === visitedSteps.length - 1">
             <mat-expansion-panel-header>
-                <mat-panel-title>{{ step.title }}</mat-panel-title>
+              <mat-panel-title>{{ step.title }}</mat-panel-title>
             </mat-expansion-panel-header>
-
+  
             <app-step-form
-                [step]="step"
-                [model]="answers[step.id]"
-                (submitStep)="onStepSubmit(step.id, $event)"
-            >
+              [step]="step"
+              [model]="answers[step.id]"
+              [readonly]="i < visitedSteps.length - 1"
+              (submitStep)="onStepSubmit(step.id, $event)">
             </app-step-form>
-            </mat-expansion-panel>
+          </mat-expansion-panel>
         </ng-container>
-    }
-
-  @if(currentStep === null) {
-    <div class="completion">
-        <h3>You're done!</h3>
-        <pre>{{ answers | json }}</pre>
-        <button mat-button (click)="reset()">Start Over</button>
-      </div>
-  }
-
-</mat-accordion>
+  
+        <div *ngIf="currentStep === null" class="completion">
+          <h3>🎉 You're done!</h3>
+          <p>All steps completed.</p>
+          <button mat-button color="primary" (click)="reset()">Start Over</button>
+        </div>
+      </mat-accordion>
+    </div>
+  
+    <!-- Right: Route Summary -->
+    <div class="wizard-summary">
+      <app-wizard-route-summary
+        [steps]="visitedSteps"
+        [answers]="answers">
+      </app-wizard-route-summary>
+    </div>
+  </div>
+  

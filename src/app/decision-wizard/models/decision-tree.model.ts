@@ -39,4 +39,17 @@ export interface DecisionTreeStep {
   outcomeMessage?: string; // Optional: display for final step
 }
 
+export interface DecisionRule {
+  field?: string;
+  value?: any;
+  expression?: string;
+  next: string;
+}
+
+export interface DecisionNextRules {
+  rules: DecisionRule[];
+  default?: string;
+}
+
+
 export type DecisionTree = DecisionTreeStep[];

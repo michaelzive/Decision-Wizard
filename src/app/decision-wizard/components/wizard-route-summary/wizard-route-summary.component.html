@@ -1,0 +1,15 @@
+<mat-card>
+    <mat-card-title>Wizard Route Summary</mat-card-title>
+    <mat-card-content>
+      <ol>
+        <li *ngFor="let step of steps">
+          <strong>{{ step.title }}</strong>
+          <ul *ngIf="answers[step.id]">
+            <li *ngFor="let key of getKeys(answers[step.id])">
+              {{ key }}: {{ answers[step.id][key] }}
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </mat-card-content>
+  </mat-card>

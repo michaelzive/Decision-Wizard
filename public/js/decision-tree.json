@@ -1,97 +1,290 @@
 [
-    {
-      "id": "step-1",
-      "title": "What kind of user are you?",
-      "fields": [
-        {
-          "key": "userType",
-          "type": "radio",
-          "templateOptions": {
-            "label": "Select user type",
-            "required": true,
-            "options": [
-              { "label": "Individual", "value": "individual" },
-              { "label": "Business", "value": "business" }
-            ]
-          }
+  {
+    "id": "step-1",
+    "title": "What kind of user are you?",
+    "fields": [
+      {
+        "key": "userType",
+        "type": "radio",
+        "templateOptions": {
+          "label": "Select user type",
+          "required": true,
+          "options": [
+            { "label": "Individual", "value": "individual" },
+            { "label": "Business", "value": "business" }
+          ]
         }
-      ],
-      "next": {
-        "individual": "step-2-individual",
-        "business": "step-2-business"
       }
-    },
-    {
-      "id": "step-2-individual",
-      "title": "Personal Details",
-      "fields": [
-        {
-          "key": "fullName",
-          "type": "input",
-          "templateOptions": {
-            "label": "Full Name",
-            "required": true
-          }
-        },
-        {
-          "key": "email",
-          "type": "input",
-          "templateOptions": {
-            "label": "Email Address",
-            "type": "email",
-            "required": true
-          },
-          "asyncValidators": {
-            "validation": ["uniqueEmail"]
-          },
-          "modelOptions": {
-            "debounce": {
-              "default": 500,
-              "blur": 0
-            }
-          }
-        }
-      ],
-      "next": {
-        "default": "step-3-confirm"
-      }
-    },
-    {
-      "id": "step-2-business",
-      "title": "Business Info",
-      "fields": [
-        {
-          "key": "companyName",
-          "type": "input",
-          "templateOptions": {
-            "label": "Company Name",
-            "required": true
-          }
-        },
-        {
-          "key": "industry",
-          "type": "select",
-          "templateOptions": {
-            "label": "Industry",
-            "required": true,
-            "options": [
-              { "label": "Technology", "value": "tech" },
-              { "label": "Healthcare", "value": "health" },
-              { "label": "Education", "value": "edu" }
-            ]
-          }
-        }
-      ],
-      "next": {
-        "default": "step-3-confirm"
-      }
-    },
-    {
-      "id": "step-3-confirm",
-      "title": "Confirmation",
-      "fields": [],
-      "isOutcome": true,
-      "outcomeMessage": "Thank you! Your information has been submitted."
+    ],
+    "next": {
+      "rules": [
+        { "expression": "userType == 'individual'", "next": "step-2-individual" },
+        { "expression": "userType == 'business'", "next": "step-2-business" }
+      ]
     }
-  ]
-  
+  },
+  {
+    "id": "step-2-individual",
+    "title": "Personal Details",
+    "fields": [
+      {
+        "key": "fullName",
+        "type": "input",
+        "templateOptions": {
+          "label": "Full Name",
+          "required": true
+        }
+      },
+      {
+        "key": "email",
+        "type": "input",
+        "templateOptions": {
+          "label": "Email Address",
+          "type": "email",
+          "required": true
+        },
+        "asyncValidators": {
+          "validation": ["uniqueEmail"]
+        }
+      }
+    ],
+    "next": {
+      "default": "step-3-individual-experience"
+    }
+  },
+  {
+    "id": "step-3-individual-experience",
+    "title": "Experience & Training",
+    "fields": [
+      {
+        "key": "experienceLevel",
+        "type": "select",
+        "templateOptions": {
+          "label": "How experienced are you?",
+          "required": true,
+          "options": [
+            { "label": "Beginner", "value": "beginner" },
+            { "label": "Intermediate", "value": "intermediate" },
+            { "label": "Advanced", "value": "advanced" }
+          ]
+        }
+      },
+      {
+        "key": "wantsTraining",
+        "type": "checkbox",
+        "templateOptions": {
+          "label": "Would you like training?"
+        }
+      },
+      {
+        "key": "score",
+        "type": "input",
+        "templateOptions": {
+          "label": "Knowledge Score (0-100)",
+          "type": "number"
+        }
+      }
+    ],
+    "next": {
+      "rules": [
+        {
+          "expression": "experienceLevel == 'beginner' and wantsTraining == true",
+          "next": "step-4-individual-training"
+        },
+        {
+          "expression": "experienceLevel == 'beginner' and (score >= 80)",
+          "next": "step-4-individual-fasttrack"
+        },
+        {
+          "expression": "experienceLevel == 'intermediate' or experienceLevel == 'advanced'",
+          "next": "step-4-individual-feedback"
+        }
+      ],
+      "default": "step-5-individual-outcome"
+    }
+  },
+  {
+    "id": "step-4-individual-training",
+    "title": "Training Preferences",
+    "fields": [
+      {
+        "key": "trainingPreference",
+        "type": "radio",
+        "templateOptions": {
+          "label": "Which do you prefer?",
+          "required": true,
+          "options": [
+            { "label": "Online", "value": "online" },
+            { "label": "In-person", "value": "inperson" }
+          ]
+        }
+      }
+    ],
+    "next": {
+      "default": "step-5-individual-outcome"
+    }
+  },
+  {
+    "id": "step-4-individual-fasttrack",
+    "title": "Fast Track",
+    "fields": [],
+    "next": {
+      "default": "step-5-individual-outcome"
+    }
+  },
+  {
+    "id": "step-4-individual-feedback",
+    "title": "Advanced Feedback",
+    "fields": [
+      {
+        "key": "interestedInMentoring",
+        "type": "checkbox",
+        "templateOptions": {
+          "label": "Interested in mentoring beginners?"
+        }
+      }
+    ],
+    "next": {
+      "default": "step-5-individual-outcome"
+    }
+  },
+  {
+    "id": "step-5-individual-outcome",
+    "title": "All Done!",
+    "fields": [],
+    "isOutcome": true,
+    "outcomeMessage": "Thanks, individual user! We've customized your next steps based on your experience."
+  },
+  {
+    "id": "step-2-business",
+    "title": "Business Info",
+    "fields": [
+      {
+        "key": "companyName",
+        "type": "input",
+        "templateOptions": {
+          "label": "Company Name",
+          "required": true
+        }
+      },
+      {
+        "key": "industry",
+        "type": "select",
+        "templateOptions": {
+          "label": "Industry",
+          "required": true,
+          "options": [
+            { "label": "Technology", "value": "tech" },
+            { "label": "Healthcare", "value": "health" },
+            { "label": "Education", "value": "edu" }
+          ]
+        }
+      }
+    ],
+    "next": {
+      "default": "step-3-business-size"
+    }
+  },
+  {
+    "id": "step-3-business-size",
+    "title": "Team Size",
+    "fields": [
+      {
+        "key": "teamSize",
+        "type": "input",
+        "templateOptions": {
+          "label": "Number of employees?",
+          "type": "number",
+          "required": true
+        }
+      }
+    ],
+    "next": {
+      "rules": [
+        {
+          "expression": "teamSize <= 10",
+          "next": "step-4-business-small"
+        },
+        {
+          "expression": "teamSize > 10 and teamSize <= 50",
+          "next": "step-4-business-medium"
+        },
+        {
+          "expression": "teamSize > 50",
+          "next": "step-4-business-large"
+        }
+      ],
+      "default": "step-5-business-outcome"
+    }
+  },
+  {
+    "id": "step-4-business-small",
+    "title": "Small Business Needs",
+    "fields": [
+      {
+        "key": "smallBizFeature",
+        "type": "multicheckbox",
+        "templateOptions": {
+          "label": "What features are important?",
+          "options": [
+            { "label": "Automation", "value": "automation" },
+            { "label": "Compliance", "value": "compliance" }
+          ]
+        }
+      }
+    ],
+    "next": {
+      "default": "step-5-business-outcome"
+    }
+  },
+  {
+    "id": "step-4-business-medium",
+    "title": "Medium Business Needs",
+    "fields": [
+      {
+        "key": "mediumBizFeature",
+        "type": "multicheckbox",
+        "templateOptions": {
+          "label": "What features are important?",
+          "options": [
+            { "label": "Automation", "value": "automation" },
+            { "label": "Compliance", "value": "compliance" },
+            { "label": "Recruitment", "value": "recruitment" }
+          ]
+        }
+      }
+    ],
+    "next": {
+      "default": "step-5-business-outcome"
+    }
+  },
+  {
+    "id": "step-4-business-large",
+    "title": "Large Business Needs",
+    "fields": [
+      {
+        "key": "largeBizFeature",
+        "type": "multicheckbox",
+        "templateOptions": {
+          "label": "What features are most critical?",
+          "options": [
+            { "label": "Automation", "value": "automation" },
+            { "label": "Compliance", "value": "compliance" },
+            { "label": "Recruitment", "value": "recruitment" },
+            { "label": "Integration", "value": "integration" }
+          ]
+        }
+      }
+    ],
+    "next": {
+      "default": "step-5-business-outcome"
+    }
+  },
+  {
+    "id": "step-5-business-outcome",
+    "title": "All Done!",
+    "fields": [],
+    "isOutcome": true,
+    "outcomeMessage": "Thanks, business user! We'll be in touch with tailored solutions for your team."
+  }
+]
