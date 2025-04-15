@@ -1,0 +1,27 @@
+<mat-accordion multi>
+    @for(step of visitedSteps; let i = $index; track step.id) {
+        <ng-container>
+            <mat-expansion-panel [expanded]="i === visitedSteps.length - 1">
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{ step.title }}</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <app-step-form
+                [step]="step"
+                [model]="answers[step.id]"
+                (submitStep)="onStepSubmit(step.id, $event)"
+            >
+            </app-step-form>
+            </mat-expansion-panel>
+        </ng-container>
+    }
+
+  @if(currentStep === null) {
+    <div class="completion">
+        <h3>You're done!</h3>
+        <pre>{{ answers | json }}</pre>
+        <button mat-button (click)="reset()">Start Over</button>
+      </div>
+  }
+
+</mat-accordion>

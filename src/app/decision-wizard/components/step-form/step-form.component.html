@@ -1,0 +1,10 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="step-form">
+    <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options">
+    </formly-form>
+
+    <div class="form-actions">
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">
+            {{ step.isOutcome ? "Finish" : "Next" }}
+        </button>
+    </div>
+</form>

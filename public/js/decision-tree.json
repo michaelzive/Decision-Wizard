@@ -1,0 +1,97 @@
+[
+    {
+      "id": "step-1",
+      "title": "What kind of user are you?",
+      "fields": [
+        {
+          "key": "userType",
+          "type": "radio",
+          "templateOptions": {
+            "label": "Select user type",
+            "required": true,
+            "options": [
+              { "label": "Individual", "value": "individual" },
+              { "label": "Business", "value": "business" }
+            ]
+          }
+        }
+      ],
+      "next": {
+        "individual": "step-2-individual",
+        "business": "step-2-business"
+      }
+    },
+    {
+      "id": "step-2-individual",
+      "title": "Personal Details",
+      "fields": [
+        {
+          "key": "fullName",
+          "type": "input",
+          "templateOptions": {
+            "label": "Full Name",
+            "required": true
+          }
+        },
+        {
+          "key": "email",
+          "type": "input",
+          "templateOptions": {
+            "label": "Email Address",
+            "type": "email",
+            "required": true
+          },
+          "asyncValidators": {
+            "validation": ["uniqueEmail"]
+          },
+          "modelOptions": {
+            "debounce": {
+              "default": 500,
+              "blur": 0
+            }
+          }
+        }
+      ],
+      "next": {
+        "default": "step-3-confirm"
+      }
+    },
+    {
+      "id": "step-2-business",
+      "title": "Business Info",
+      "fields": [
+        {
+          "key": "companyName",
+          "type": "input",
+          "templateOptions": {
+            "label": "Company Name",
+            "required": true
+          }
+        },
+        {
+          "key": "industry",
+          "type": "select",
+          "templateOptions": {
+            "label": "Industry",
+            "required": true,
+            "options": [
+              { "label": "Technology", "value": "tech" },
+              { "label": "Healthcare", "value": "health" },
+              { "label": "Education", "value": "edu" }
+            ]
+          }
+        }
+      ],
+      "next": {
+        "default": "step-3-confirm"
+      }
+    },
+    {
+      "id": "step-3-confirm",
+      "title": "Confirmation",
+      "fields": [],
+      "isOutcome": true,
+      "outcomeMessage": "Thank you! Your information has been submitted."
+    }
+  ]
+  
