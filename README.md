@@ -1,10 +1,12 @@
 # Angular Dynamic Decision Wizard
 
-An elegant, dynamic wizard component for Angular that guides users through a decision tree of questions — with branching logic, async validations, route summaries, and a polished Material UI.
+A dynamic wizard component for Angular that guides users through a decision tree of questions — with branching logic, async validations, route summaries, and a polished Material UI.
 
-This project is ideal for building guided workflows, onboarding flows, form-based diagnostics, or decision engines — and is designed to be modular, extensible, and embeddable in enterprise or public-facing Angular applications.
+This project is ideal for building guided workflows, onboarding flows, form-based diagnostics, or decision engines.
+
 
 ---
+
 
 ## ✨ Features
 
